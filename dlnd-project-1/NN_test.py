@@ -1,8 +1,20 @@
+"""
+Author: Walter
+Date: 09/02/17
+"""
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 #from benchmark import MSE#, NeuralNetwork
 from sys import argv
+"""
+here we built a 2 hidden layer based neural network, the network structure looks as below:
+
+input ---------->   hidden_layer_0   ------------>  hidden_layer_1   -----------> output_layer
+	weights				weights				weights
+	i_to_h				h_to_h				h_to_o
+
+"""
 #Multi-Hidden layer neural network version 0.1.0
 #This NeuralNetwork is only used for regression tasks, if you want use it for classification tasks, you need add activation function to final_outputs
 class NeuralNetwork_V1(object):
@@ -13,7 +25,6 @@ class NeuralNetwork_V1(object):
 		self.hidden_nodes_0 = hidden_nodes_0
 		self.hidden_nodes_1 = hidden_nodes_1
 		self.output_nodes = output_nodes
-		#self.hidden_layers = hidden_layers
 		#Initialize all weights
 		self.weights_input_to_hidden = np.random.normal(0.0, self.hidden_nodes_0**-0.5, (self.hidden_nodes_0, self.input_nodes))
 		self.weights_hidden_to_hidden = np.random.normal(0.0, self.hidden_nodes_1**-0.5,(self.hidden_nodes_1, self.hidden_nodes_0))
@@ -33,18 +44,20 @@ class NeuralNetwork_V1(object):
 		#output errors(label_list - label_list)
 		error = label_list - self.final_outputs
 		#Backpropagated error
-		#errors propagated to the hidden layer
+		#errors propagated to the hidden layer_1
 		hhidden_errors = np.dot(self.weights_hidden_to_output.T, error) * self.hidden_outputs_1 * (1 - self.hidden_outputs_1)
-		#hidden layer gradients
+		#hidden layer gradients for the hidden layer_1
 		hhidden_grad = np.dot(error, self.hidden_outputs_1.T)
+		#hidden propagated to the hidden layer_0
 		hidden_errors = np.dot(self.weights_hidden_to_hidden.T, hhidden_errors) * self.hidden_outputs * (1 - self.hidden_outputs)
+		#hidden layer gradients for the hidden layer_0
 		hiden_grad = np.dot(hhidden_errors, self.hidden_outputs.T)
 		#update weights
 		#update hidden-to-output weights with gradient descent step
 		self.weights_hidden_to_output += self.lr * hhidden_grad / self.inputs.shape[1]
-		#update input-to-hidden weights with gradient descent step
-		#TODO Complete this
+		#update hidden-to-hidden weights with gradient descent step
 		self.weights_hidden_to_hidden += self.lr * hiden_grad/ self.inputs.shape[1]
+		#update input-to-hidden weights with gradient descent step
 		self.weights_input_to_hidden += self.lr * np.dot(hidden_errors, self.inputs.T)/self.inputs.shape[1]
 
 	#code for predict tasks
