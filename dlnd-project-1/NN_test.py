@@ -30,7 +30,8 @@ class NeuralNetwork_V1(object):
 		self.passforward(inputs_list)
 		#Backward through
 		#output errors(label_list - label_list)
-		error = label_list - self.final_outputs
+		error = (label_list - self.final_outputs)
+		#error_delta = (label_list - self.final_outputs)
 		#Backpropagated error
 		#errors propagated to the hidden layer
 		#hhidden_errors = np.dot(self.weights_hidden_to_output.T, error) * self.hidden_outputs_1 * (1 - self.hidden_outputs_1)
@@ -51,7 +52,8 @@ class NeuralNetwork_V1(object):
 		hidden_errors = np.dot(self.weights_hidden_to_hidden.T, hhidden_errors)# errors propagated to the hidden layer
 		hidden_grad = self.hidden_outputs * (1 - self.hidden_outputs)# hidden layer gradients
 		self.weights_hidden_to_output += self.lr * np.dot(error, self.hidden_outputs_1.T) # update hidden-to-output weights with gradient descent step
-		self.weights_hidden_to_hidden += self.lr * np.dot(hhidden_errors, self.hidden_outputs.T)
+		#self.weights_hidden_to_hidden += self.lr * np.dot(hhidden_errors, self.hidden_outputs.T)
+		self.weights_hidden_to_hidden += self.lr * np.dot((hhidden_errors * hhidden_grad), self.hidden_outputs.T)
 		self.weights_input_to_hidden += self.lr * np.dot((hidden_errors * hidden_grad), self.inputs.T)# h
 
 	#code for predict tasks
