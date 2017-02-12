@@ -8,4 +8,4 @@ FutureDevelop Plan:
 
 1. Add new activation; relu in this Library
 
-2. Add GPU support instead with np.dot opearation
+2. Add GPU support instead of np.dot opearation
