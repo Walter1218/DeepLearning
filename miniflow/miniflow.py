@@ -221,7 +221,7 @@ class MSE(Node):
         self.m = self.inbound_nodes[0].value.shape[0]
         self.diff = y - a
         #self.value = np.mean(np.square(self.diff))
-        self.value = np.square(self.diff) / self.m
+        self.value = np.mean(np.square(self.diff))#np.square(self.diff) / self.m
 
     def backward(self):
         """
@@ -314,7 +314,7 @@ def forward_and_backward(graph):
     # see: https://docs.python.org/2.3/whatsnew/section-slices.html
     for n in graph[::-1]:
         n.backward()
-        
+
 """
 sgd algorithm function works for Miniflow
 """

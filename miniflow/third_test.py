@@ -116,7 +116,7 @@ def nn(X_, y_, V_X_, V_y_ ,hidden_nodes_0, hidden_nodes_1, learnrate, epochs):
             y.value = V_y_
             forward_and_backward(graph)
             V_loss += graph[-1].value
-        print("Epoch: {0}, Train Loss: {1}, Valid Loss: {2}".format(i+1, (np.sum(loss)/steps_per_epoch), (np.sum(V_loss)/steps_per_epoch)))
+        print("Epoch: {0}, Train Loss: {1}, Valid Loss: {2}".format(i+1, loss/steps_per_epoch, V_loss/steps_per_epoch))
     print(trainables)
     return trainables
 

@@ -75,6 +75,6 @@ for i in range(epochs):
         # Step 3
         sgd_update(trainables)
         loss += graph[-1].value
-    print("Epoch: {0}, Loss: {1}".format(i+1, (np.sum(loss)/steps_per_epoch)))
+    print("Epoch: {0}, Loss: {1}".format(i+1, loss/steps_per_epoch))
     #print('%10.3f' % pi)
     #print("epoch:"+ str(i+1)+", Loss: {}" .format (np.sum(loss)/steps_per_epoch))
