@@ -1,4 +1,4 @@
-# Mini Deep Learning Library (LightNet)
+# Mini Deep Learning Library (LightNetBox)
 
 Changelog
 
