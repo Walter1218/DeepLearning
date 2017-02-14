@@ -1,11 +1,13 @@
-# Mini Deep Learning Library
+# Mini Deep Learning Library (LightNet)
 
 Changelog
 
 11/02/17 Initialize this project
 
-FutureDevelop Plan:
+FutureDevelop Planning:
 
 1. Add new activation; relu in this Library
 
-2. Add GPU support instead of np.dot opearation
+2. Add GPU support instead of np.dot operation
+
+3. Add GPU support instead of np.sum operation
