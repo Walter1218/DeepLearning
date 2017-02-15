@@ -12,3 +12,5 @@ FutureDevelop Planning:
 1. Add GPU support instead of np.dot operation
 
 2. Add GPU support instead of np.sum operation
+
+3. Add adagrad methods for learning update
