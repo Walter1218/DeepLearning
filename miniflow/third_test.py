@@ -71,9 +71,9 @@ def nn(X_, y_, V_X_, V_y_ ,hidden_nodes_0, hidden_nodes_1, learnrate, epochs):
     W2, b2 = Input(), Input()
     W3, b3 = Input(), Input()
     l1 = Linear(X, W1, b1)
-    s1 = Sigmoid(l1)
+    s1 = Relu(l1)
     l2 = Linear(s1, W2, b2)
-    s2 = Sigmoid(l2)
+    s2 = Relu(l2)
     l3 = Linear(s2, W3, b3)
     cost = MSE(y, l3)
     feed_dict = {

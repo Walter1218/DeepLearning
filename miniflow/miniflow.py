@@ -150,9 +150,6 @@ class Linear(Node):
 This is Sigmoid function works for our Miniflow Library
 """
 class Sigmoid(Node):
-    """
-    You need to fix the `_sigmoid` and `forward` methods.
-    """
     def __init__(self, node):
         Node.__init__(self, [node])
 
@@ -164,6 +161,9 @@ class Sigmoid(Node):
         Return the result of the sigmoid function.
         """
         return 1. / (1 + np.exp(-x))
+    
+    def _sigmoid2deriv(self, x):
+        return x * (1 - x)
 
     def forward(self):
         """
@@ -189,8 +189,51 @@ class Sigmoid(Node):
             Set the gradients property to the gradients with respect to each input.
             NOTE: See the Linear node and MSE node for examples.
             """
-            self.gradients[self.inbound_nodes[0]] += self.value * (1 - self.value) * n.gradients[self]
-
+            self.gradients[self.inbound_nodes[0]] += self._sigmoid2deriv(self.value) * grad_cost
+"""
+This is Relu function works for Miniflow
+"""
+class Relu(Node):
+    def __init__(self, node):
+        Node.__init__(self, [node])
+    
+    def _relu(self, x):
+        """
+            This method is separate from `forward` because it
+            will be used later with `backward` as well.
+            `x`: A numpy array-like object.
+            Return the result of the relu function.
+            """
+        return (x > 0) * x
+    
+    def _relu2deriv(self, x):
+        return (x > 0)
+    
+    def forward(self):
+        """
+            Set the value of this node to the result of the
+            relu function, `_relu`.
+            """
+        self.value = self._relu(self.inbound_nodes[0].value)
+    
+    def backward(self):
+        """
+            Calculates the gradient using the derivative of
+            the relu function.
+            """
+        # Initialize the gradients to 0.
+        self.gradients = {n: np.zeros_like(n.value) for n in self.inbound_nodes}
+        
+        # Cycle through the outputs. The gradient will change depending
+        # on each output, so the gradients are summed over all outputs.
+        for n in self.outbound_nodes:
+            # Get the partial of the cost with respect to this node.
+            grad_cost = n.gradients[self]
+            """
+                Set the gradients property to the gradients with respect to each input.
+                NOTE: See the Linear node and MSE node for examples.
+                """
+            self.gradients[self.inbound_nodes[0]] += self._relu2deriv(self.value) * grad_cost
 """
 MSE function works for Miniflow
 """
